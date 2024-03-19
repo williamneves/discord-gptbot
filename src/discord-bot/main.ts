@@ -229,36 +229,6 @@ export const startDiscordServer = async () => {
 				await m.reply("Sorry, I can't process this message type")
 			}
 		}
-
-		// Ignore messages from bots
-
-		// Log the message
-		// console.log(JSON.stringify(message, null, 2))
-
-		// if (
-		// 	// Mention
-		// 	m.content.includes("@" + clientId) ||
-		// 	// Command
-		// 	m.content.toLocaleLowerCase().includes("!gpt") ||
-		// 	// Reply
-		// 	m.mentions?.repliedUser?.bot
-		// ) {
-		// 	// Send typing indicator
-		// 	// await message.channel.sendTyping()
-		// 	// Generate a response
-		// 	// try {
-		// 	// 	const response = await gptResponse(message)
-		// 	// 	// @ts-ignore
-		// 	// 	if (response) {
-		// 	// 		await message.channel.send(response)
-		// 	// 	} else {
-		// 	// 		await message.channel.send("Something went wrong... :(")
-		// 	// 	}
-		// 	// } catch (error) {
-		// 	// 	console.log("Error generating response: ", error)
-		// 	// 	await message.channel.send("Something went wrong... :(")
-		// 	// }
-		// }
 	})
 
 	client.login(TOKEN)

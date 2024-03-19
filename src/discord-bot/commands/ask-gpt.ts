@@ -1,12 +1,13 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js"
+import { slashGPT } from "../../openai/slash-gpt"
 
 export const askGpt = new SlashCommandBuilder()
 	.setName("ask-gpt")
-	.setDescription("Ask GPT a question")
+	.setDescription("Pergunte ao GPT. (Ele não tem acesso ao histórico do chat)")
 	.addStringOption((option) =>
 		option
 			.setName("question")
-			.setDescription("The question to ask GPT-3")
+			.setDescription("A pergunta que você quer fazer ao GPT.")
 			.setRequired(true)
 	)
 	.toJSON()
@@ -14,5 +15,24 @@ export const askGpt = new SlashCommandBuilder()
 export const askGptAction = async (interaction: CommandInteraction) => {
 	const question = interaction.options.get("question")!.value as string
 
-	await interaction.reply(`You asked: ${question}`)
+	try {
+		const response = await slashGPT(question)
+
+		if (!response) {
+			await interaction.reply(
+				"I'm sorry, I don't know the answer to that question."
+			)
+			return
+		}
+
+		await interaction.reply(response)
+
+		return
+	} catch (error) {
+		console.error("askGptAction error", error)
+		await interaction.reply(
+			"I'm sorry, I don't know the answer to that question."
+		)
+		return
+	}
 }

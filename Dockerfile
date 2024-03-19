@@ -7,14 +7,11 @@ WORKDIR /app
 # Update package lists, install packages, and clean up in one RUN to keep the image size small
 RUN apt-get update && apt-get install -y git curl bash && rm -rf /var/lib/apt/lists/*
 
-# Get project code
+# Get project code (not cached)
+ARG CACHEBUST=1
 RUN git clone https://github.com/williamneves/discord-gptbot.git .
-
-# Run ls to see the files
-RUN ls -la
-
 # Since we're using the Bun image, Bun is already installed, and we can directly use it
-RUN bun build
+# RUN bun build
 
 # Remove the .git directory for a smaller image
 RUN rm -rf .git 

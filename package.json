@@ -4,7 +4,7 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start:init": "bun install && bunx prisma push && bun run src/index.ts",
+    "start:init": "bun install && bunx prisma db push && bun run src/index.ts",
     "start": "bun run src/index.ts",
     "dev": "bun --watch run src/index.ts"
   },

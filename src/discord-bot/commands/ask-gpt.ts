@@ -25,7 +25,9 @@ export const askGptAction = async (interaction: CommandInteraction) => {
 			return
 		}
 
-		await interaction.reply(response)
+		const reply = `**Pergunta**: ${question}\n\n\n**Resposta**: ${response}`
+
+		await interaction.reply(reply)
 
 		return
 	} catch (error) {

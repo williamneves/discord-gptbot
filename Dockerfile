@@ -1,12 +1,11 @@
-FROM node:21-alpine AS base
-
-# Install git, curl, and bash
-RUN apk add --no-cache git curl bash
-
-# Install bun 
-RUN curl -fsSL https://bun.sh/install | bash
+# Use the official Bun image
+FROM oven/bun AS base
 
 WORKDIR /app
+
+# Install git, curl, and bash
+# Update package lists, install packages, and clean up in one RUN to keep the image size small
+RUN apt-get update && apt-get install -y git curl bash && rm -rf /var/lib/apt/lists/*
 
 # Get project code
 RUN git clone https://github.com/williamneves/discord-gptbot.git .
@@ -14,11 +13,11 @@ RUN git clone https://github.com/williamneves/discord-gptbot.git .
 # Run ls to see the files
 RUN ls -la
 
-# Install dependencies
+# Since we're using the Bun image, Bun is already installed, and we can directly use it
 RUN bun build
 
 # Remove the .git directory for a smaller image
 RUN rm -rf .git 
 
 # Set Environment Variables (via docker run) 
-CMD ["bun", "start"] 
+CMD ["bun", "start:init"]

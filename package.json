@@ -4,6 +4,7 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
+    "build": "bun install && bunx prisma push",
     "start": "bun run src/index.ts",
     "dev": "bun --watch run src/index.ts"
   },
